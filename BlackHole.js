@@ -7,6 +7,7 @@ class BlackHole {
         this.mass = m;
         this.G = 5; // Stronger gravity constant for the effect
         this.rs = (2 * this.G * this.mass) / (30); // Schwarzschild radius visual proxy
+        this.absorbRadius = 15;
     }
 
     attract(particle) {
@@ -22,6 +23,15 @@ class BlackHole {
         let strength = (this.G * this.mass * particle.mass) / (distance * distance);
         force.mult(strength);
         return force;
+
+        absorb(particle, system, whiteHole) {
+        let d = p5.Vector.dist(this.pos, particle.pos);
+
+        if (d < this.absorbRadius) {
+            system.removeParticle(particle);
+            whiteHole.emit(system);
+            }
+        }
     }
 
     // Check if particle hit the event horizon
