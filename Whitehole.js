@@ -8,9 +8,9 @@ class WhiteHole {
     let p = new Particle(this.pos.x, this.pos.y);
 
     // 방사형으로 튀어나오게
-    p.velocity = p5.Vector.random2D().mult(random(2, 5));
+    p.vel = p5.Vector.random2D().mult(random(2, 5));
 
-    system.addParticle(p);
+    system.particles.push(p);
   }
 
   show() {

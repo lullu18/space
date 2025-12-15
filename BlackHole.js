@@ -23,8 +23,9 @@ class BlackHole {
         let strength = (this.G * this.mass * particle.mass) / (distance * distance);
         force.mult(strength);
         return force;
+    }
 
-        absorb(particle, system, whiteHole) {
+    absorb(particle, system, whiteHole) {
         let d = p5.Vector.dist(this.pos, particle.pos);
 
         if (d < this.absorbRadius) {
@@ -32,7 +33,6 @@ class BlackHole {
             whiteHole.emit(system);
             }
         }
-    }
 
     // Check if particle hit the event horizon
     checkInside(particle) {

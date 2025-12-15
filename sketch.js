@@ -7,7 +7,7 @@ function setup() {
     createCanvas(800, 600);
 
     // Create the central Black Hole
-    blackHole = new BlackHole(width / 3, height / 2);
+    blackHole = new BlackHole(width / 3, height / 2, 50);
     whiteHole = new WhiteHole(width * 2 / 3, height / 2);
 
     // Initialize with a few particle systems around the canvas
@@ -19,13 +19,6 @@ function setup() {
 
 function draw() {
     background(10, 10, 20, 200); // Slight trail effect with alpha
-
-    for (let p of system.particles) {
-        blackHole.attract(p);
-        blackHole.absorb(p, system, whiteHole);
-        p.update();
-        p.show();
-    }
 
     // Draw stars background (static for performance, could be an image but generated here)
     if (frameCount === 1) {
