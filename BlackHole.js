@@ -7,7 +7,7 @@ class BlackHole {
         this.mass = m;
         this.G = 5; // Stronger gravity constant for the effect
         this.rs = (2 * this.G * this.mass) / (30); // Schwarzschild radius visual proxy
-        this.absorbRadius = 15;
+        this.absorbRadius = 25;
     }
 
     attract(particle) {
@@ -60,5 +60,8 @@ class BlackHole {
         strokeWeight(1);
         noFill();
         ellipse(this.pos.x, this.pos.y, this.rs * 2);
+
+        stroke(150, 150, 255, 40);
+        line(this.pos.x, this.pos.y, whiteHole.pos.x, whiteHole.pos.y);
     }
 }

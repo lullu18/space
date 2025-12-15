@@ -9,12 +9,6 @@ function setup() {
     // Create the central Black Hole
     blackHole = new BlackHole(width / 3, height / 2, 50);
     whiteHole = new WhiteHole(width * 2 / 3, height / 2);
-
-    // Initialize with a few particle systems around the canvas
-    systems.push(new ParticleSystem(100, 100));
-    systems.push(new ParticleSystem(width - 100, height - 100));
-    systems.push(new ParticleSystem(width - 100, 100));
-    systems.push(new ParticleSystem(100, height - 100));
 }
 
 function draw() {
@@ -39,21 +33,12 @@ function draw() {
 }
 
 function mousePressed() {
-    // Create a new Particle System at mouse position
-    systems.push(new ParticleSystem(mouseX, mouseY));
+    let ps = new ParticleSystem(mouseX, mouseY);
+
+    for (let i = 0; i <30; i++) {
+        ps.addParticle();
+    }
+
+    systems.push(ps);
 }
 
-// ---------------------------------------------------------
-// CLASS: Particle
-// ---------------------------------------------------------
-// Moved to Particle.js
-
-// ---------------------------------------------------------
-// CLASS: ParticleSystem
-// ---------------------------------------------------------
-// Moved to ParticleSystem.js
-
-// ---------------------------------------------------------
-// CLASS: BlackHole (Attractor)
-// ---------------------------------------------------------
-// Moved to BlackHole.js
