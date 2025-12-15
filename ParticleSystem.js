@@ -49,4 +49,11 @@ class ParticleSystem {
             }
         }
     }
+
+    removeParticle(particle) {
+        let index = this.particles.indexOf(particle);
+        if (index !== -1) {
+        this.particles.splice(index, 1);
+        }
+    }
 }
