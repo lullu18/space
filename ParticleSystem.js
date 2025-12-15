@@ -1,6 +1,3 @@
-// ---------------------------------------------------------
-// CLASS: ParticleSystem
-// ---------------------------------------------------------
 class ParticleSystem {
     constructor(x, y) {
         this.origin = createVector(x, y);

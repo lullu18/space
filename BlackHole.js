@@ -1,6 +1,3 @@
-// ---------------------------------------------------------
-// CLASS: BlackHole (Attractor)
-// ---------------------------------------------------------
 class BlackHole {
     constructor(x, y, m) {
         this.pos = createVector(x, y);

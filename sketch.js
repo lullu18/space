@@ -9,6 +9,8 @@ function setup() {
     // Create the central Black Hole
     blackHole = new BlackHole(width / 3, height / 2, 50);
     whiteHole = new WhiteHole(width * 2 / 3, height / 2);
+
+    systems.push(new ParticleSystem(0, 0));
 }
 
 function draw() {

@@ -30,5 +30,5 @@ class WhiteHole {
     noFill();
     stroke(200, 200, 255);
     ellipse(this.pos.x, this.pos.y, 40);
-}
+    }
 }
