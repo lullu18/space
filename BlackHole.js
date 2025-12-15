@@ -26,14 +26,6 @@ class BlackHole {
         return force;
     }
 
-    absorb(particle, system, whiteHole) {
-        let d = p5.Vector.dist(this.pos, particle.pos);
-
-        if (d < this.absorbRadius) {
-            system.removeParticle(particle);
-            whiteHole.emit(system);
-            }
-        }
 
     // Check if particle hit the event horizon
     checkInside(particle) {

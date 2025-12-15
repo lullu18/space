@@ -14,31 +14,21 @@ function setup() {
 function draw() {
     background(10, 10, 20, 200); // Slight trail effect with alpha
 
-    // Draw stars background (static for performance, could be an image but generated here)
-    if (frameCount === 1) {
-        background(0);
+    whiteHole.update(systems[0]); // Update white hole to emit particles
+
+
+    for (let ps of systems) {
+        ps.applyAttractor(blackHole);
+        ps.applyNoise();
+        ps.run();
     }
 
     // Display Black Hole
     blackHole.show();
     whiteHole.show();
-
-    for (let i = systems.length - 1; i >= 0; i--) {
-        let ps = systems[i];
-        ps.addParticle();
-        ps.applyAttractor(blackHole);
-        ps.applyNoise();
-        ps.run();
-    }
 }
 
 function mousePressed() {
-    let ps = new ParticleSystem(mouseX, mouseY);
-
-    for (let i = 0; i <30; i++) {
-        ps.addParticle();
-    }
-
-    systems.push(ps);
+    whiteHole.pos.set(mouseX, mouseY);
 }
 
