@@ -10,6 +10,8 @@ class Particle {
         this.acc = createVector(0, 0);
         this.lifespan = 255.0;
         this.mass = random(0.5, 2);
+        this.fromWhiteHole = false;
+        this.immunity = 0;
 
         // Color: Purple to Blue spectrum
         this.hue = random(180, 280); // Blue to Purple/Pink range if using HSB logic roughly
@@ -29,6 +31,10 @@ class Particle {
         this.pos.add(this.vel);
         this.acc.mult(0);
         this.lifespan -= 0.5; // Slow decay
+
+        if (this.immunity > 0) {
+            this.immunity--;
+        }  
     }
 
     show() {

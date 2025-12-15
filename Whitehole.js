@@ -8,11 +8,14 @@ class WhiteHole {
     for (let i = 0; i < 5; i++) {
         let p = new Particle(this.pos.x, this.pos.y);
 
-        p.vel = p5.Vector.random2D().mult(random(2, 5));
-        p.lifespan = 255;
-        p.r =200;
-        p.g =200;
-        p.b =255;
+        p.vel = p5.Vector.random2D().mult(random(5, 9));
+
+        p.fromWhiteHole = true;
+        p.immunity = 60; // Frames of immunity from being re-absorbed
+
+        p.r = 200;
+        p.g = 200;
+        p.b = 255;
 
         system.particles.push(p);
     }

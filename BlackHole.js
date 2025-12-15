@@ -11,6 +11,7 @@ class BlackHole {
     }
 
     attract(particle) {
+        if (particle.immunity > 0) return createVector(0, 0);
         let force = p5.Vector.sub(this.pos, particle.pos);
         let distance = force.mag();
 
