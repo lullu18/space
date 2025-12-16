@@ -19,10 +19,10 @@ class WhiteHole {
     }
   }
   
-  update(system) {
+  update() {
     this.timer++;
     if (this.timer % this.interval === 0) {
-            this.emit(system);
+            this.emit(this.system);
         }
     }
 

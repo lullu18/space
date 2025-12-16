@@ -52,6 +52,5 @@ class BlackHole {
         ellipse(this.pos.x, this.pos.y, this.rs * 2);
 
         stroke(150, 150, 255, 40);
-        line(this.pos.x, this.pos.y, whiteHole.pos.x, whiteHole.pos.y);
     }
 }

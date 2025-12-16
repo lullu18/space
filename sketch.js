@@ -1,6 +1,6 @@
 let systems = [];
 let blackHole;
-let whiteHole;
+let whiteHoles = [];
 let G = 1; // Gravitational constant
 
 function setup() {
@@ -8,16 +8,17 @@ function setup() {
 
     // Create the central Black Hole
     blackHole = new BlackHole(width / 3, height / 2, 50);
-    whiteHole = new WhiteHole(width * 2 / 3, height / 2);
 
-    systems.push(new ParticleSystem(0, 0));
+    // systems.push(new ParticleSystem(0, 0));
 }
 
 function draw() {
     background(10, 10, 20, 200); // Slight trail effect with alpha
 
-    whiteHole.update(systems[0]); // Update white hole to emit particles
-
+    for (let wh of whiteHoles) {
+        wh.update(systems[0]); // Update white hole to emit particles
+        wh.show();
+    }
 
     for (let ps of systems) {
         ps.applyAttractor(blackHole);
@@ -25,12 +26,14 @@ function draw() {
         ps.run();
     }
 
-    // Display Black Hole
     blackHole.show();
-    whiteHole.show();
 }
 
 function mousePressed() {
-    whiteHole.pos.set(mouseX, mouseY);
+    let wh = new WhiteHole(mouseX, mouseY);
+    let ps = new ParticleSystem(mouseX, mouseY);
+    wh.system = ps;
+    whiteHoles.push(wh);
+    systems.push(ps);
 }
 
