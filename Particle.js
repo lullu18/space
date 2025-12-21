@@ -3,7 +3,10 @@ class Particle {
         this.pos = createVector(x, y);
 
         let angle = random(TWO_PI);
-        this.vel = p5.Vector.fromAngle(angle).mult(random(0.5, 2));
+        let radial = p5.Vector.fromAngle(angle).mult(random(0.2, 1.2));
+        let tangential = p5.Vector.fromAngle(angle + HALF_PI).mult(random(0.5, 2));
+
+        this.vel = p5.Vector.add(radial, tangential);
 
         this.acc = createVector(0, 0);
 
@@ -57,6 +60,10 @@ class Particle {
         this.acc.mult(0);
 
         this.life -= this.decay;
+
+        let noiseAngle = noise(this.pos.x * 0.005, this.pos.y * 0.005, frameCount * 0.01) * TWO_PI;
+        let jitter = p5.Vector.fromAngle(noiseAngle).mult(0.03);
+        this.vel.add(jitter);
     }
 
     show() {

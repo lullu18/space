@@ -27,10 +27,10 @@ function draw() {
     blackHole.updateByBalance(balance);
     whiteHole.updateByBalance(balance);
 
+    particleSystem.emitFromWhiteHole(whiteHole);
+
     blackHole.show();
     whiteHole.show();
-
-    particleSystem.emitFromWhiteHole(whiteHole);
 
     particleSystem.applyBlackHole(blackHole);
     particleSystem.applyWhiteHole(whiteHole);

@@ -26,6 +26,8 @@ class WhiteHole {
   show() {
     noFill();
     stroke(0, 0, 100, 150);
+    strokeWeight(4);
+    point(this.pos.x, this.pos.y);
     ellipse(this.pos.x, this.pos.y, this.visualRadius * 2);
   }
 }

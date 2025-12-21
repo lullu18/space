@@ -16,16 +16,21 @@ class BlackHole {
     }
 
     attract(particle) {
-        let force = p5.Vector.sub(this.pos, particle.pos);
-        let distance = constrain(force.mag(), 12, this.influenceRadius);
+        let dir = p5.Vector.sub(this.pos, particle.pos);
+        let d = constrain(dir.mag(), 12, this.influenceRadius);
 
-        force.normalize();
+        dir.normalize();
 
-        let strength = (this.G * this.mass * particle.mass) / (distance * distance);
-        strength *= 1.4;
-        
-        force.mult(strength);
-        return force;
+        let gravityStrength =
+        (this.G * this.mass * particle.mass) / (d * d);
+
+        let gravity = dir.copy().mult(gravityStrength * 2.2);
+
+        let swirl = createVector(-dir.y, dir.x);
+        let swirlStrength = map(d, 0, this.influenceRadius, 0.15, 0);
+        swirl.mult(swirlStrength);
+
+        return p5.Vector.add(gravity, swirl);
     }
 
     show() {

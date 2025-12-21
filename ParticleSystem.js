@@ -4,13 +4,24 @@ class ParticleSystem {
     }
 
     emitFromWhiteHole(whiteHole) {
-        if (random() < 0.25) {
-            this.particles.push(
-                new Particle(
-                    whiteHole.x, 
-                    whiteHole.y
-                )
-            );
+        if (!whiteHole || !whiteHole.pos) return;
+
+        let emitcount = 4;
+
+        for (let i = 0; i < emitcount; i++) {
+            let jitter = p5.Vector
+                .random2D()
+                .mult(random(0, 3));
+            
+            let p = new Particle(
+                whiteHole.pos.x + jitter.x, 
+                whiteHole.pos.y + jitter.y
+            );  
+
+            p.baseSize = random(4, 8);
+            p.size = p.baseSize;
+
+            this.particles.push(p);
         }
     }
 
@@ -23,9 +34,33 @@ class ParticleSystem {
 
             if (d < blackHole.influenceRadius) {
                 p.applyForce(blackHole.attract(p));
+            
+                let boostedMaxSpeed = map(
+                    d, 
+                    blackHole.influenceRadius, 
+                    0, 
+                    p.maxSpeed, 
+                    p.maxSpeed * 2.2
+                );
+
+                p.vel.limit(boostedMaxSpeed);
             }
-        }
+
+            let shrinkRatio = map(
+                d,
+                blackHole.influenceRadius,
+                blackHole.visualRadius * 0.2,
+                1,
+                0
+            );
+            p.size = max(0.5, p.baseSize * shrinkRatio);
+
+            if (d < blackHole.visualRadius * 0.6) {
+                p.life = 0;
+            }
+        } 
     }
+
 
     applyWhiteHole(whiteHole) {
         for (let p of this.particles) {
@@ -41,8 +76,10 @@ class ParticleSystem {
 
     update() {
         for (let i = this.particles.length - 1; i >= 0; i--) {
-            this.particles[i].update();
-            if (this.particles[i].isDead()) {
+            let p = this.particles[i];
+            p.update();
+
+            if (p.isDead()) {
                 this.particles.splice(i, 1);
             }
         }
