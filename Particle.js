@@ -1,43 +1,53 @@
 class Particle {
     constructor(x, y) {
         this.pos = createVector(x, y);
-        this.vel = p5.Vector.random2D();
+
+        let angle = random(TWO_PI);
+        this.vel = p5.Vector.fromAngle(angle).mult(random(0.5, 2));
+
         this.acc = createVector(0, 0);
 
-        this.mass = random(0.5, 2);
-        this.maxSpeed = 4;
+        this.mass = random(0.6, 2);
+        this.maxSpeed = random(3, 7);
 
-        this.hue = random(220, 280);
-        this.baseSaturation = random(60, 90);
-        this.baseBrightness = random(40, 70);
+        this.size = random(2.5, 5.5);
+
+        this.hue = random(215, 265);
+        this.sat = random(30, 60);
+
+        this.baseBrightness = random(55, 85);
         this.currentBrightness = this.baseBrightness;
-        this.alpha = random(120, 180);
+
+        this.alpha = random(100, 180);
+
+        this.life = 255;
+        this.decay = random(0.6, 1.2);
+
     }
 
+    
     applyForce(force) {
         let f = p5.Vector.div(force, this.mass);
         this.acc.add(f);
     }
 
     updateColorByPosition(blackHole, whiteHole) {
-        let dBlack = dist(
-          this.pos.x, this.pos.y,
-          blackHole.pos.x, blackHole.pos.y
-        );
-
         let dWhite = dist(
-            this.pos.x, this.pos.y,
-            whiteHole.pos.x, whiteHole.pos.y
+            this.pos.x,
+            this.pos.y,
+            whiteHole.pos.x,
+            whiteHole.pos.y
         );
 
-        dBlack = constrain(dBlack, 0, blackHole.influenceRadius);
-        dWhite = constrain(dWhite, 0, 300);
+        let ratio = map(dWhite, 0, 320, 1, 0);
+        ratio = constrain(ratio, 0, 1);
 
-        let whiteRatio = map(dWhite, 0, 300, 1, 0);
-
-        let targetBrightness = lerp(30, 100, whiteRatio);
-
-        this.currentBrightness = lerp(this.currentBrightness, targetBrightness, 0.03);
+        let targetBrightness = lerp(25, 100, ratio);
+        this.currentBrightness = lerp(
+            this.currentBrightness,
+            targetBrightness,
+            0.04
+        );
     }
 
     update() {
@@ -45,11 +55,22 @@ class Particle {
         this.vel.limit(this.maxSpeed);
         this.pos.add(this.vel);
         this.acc.mult(0);
+
+        this.life -= this.decay;
     }
 
     show() {
         noStroke();
-        fill(this.hue, 40, this.currentBrightness, this.alpha);
-        ellipse(this.pos.x, this.pos.y, 3);
+        fill(
+        this.hue,
+        this.sat,
+        this.currentBrightness,
+        this.alpha * (this.life / 255)
+        );
+        ellipse(this.pos.x, this.pos.y, this.size);
+    }
+
+    isDead() {
+        return this.life <= 0;
     }
 }

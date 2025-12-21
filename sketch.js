@@ -13,14 +13,14 @@ function setup() {
     slider.position(20, 20);
     slider.style('width', '160px');
 
-    blackHole = new BlackHole(width / 3, height / 2, 50);
+    blackHole = new BlackHole(width / 3, height / 2);
     whiteHole = new WhiteHole((2 * width) / 3, height / 2);
 
     particleSystem = new ParticleSystem();
 }
 
 function draw() {
-    background(10); 
+    background(10, 40); 
 
     balance = slider.value();
 
@@ -29,6 +29,8 @@ function draw() {
 
     blackHole.show();
     whiteHole.show();
+
+    particleSystem.emitFromWhiteHole(whiteHole);
 
     particleSystem.applyBlackHole(blackHole);
     particleSystem.applyWhiteHole(whiteHole);

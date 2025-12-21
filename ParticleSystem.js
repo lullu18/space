@@ -1,8 +1,16 @@
 class ParticleSystem {
-    constructor(x, y) {
+    constructor() {
         this.particles = [];
-        for(let i = 0; i < 300; i++) {
-            this.particles.push(new Particle(random(width), random(height)));
+    }
+
+    emitFromWhiteHole(whiteHole) {
+        if (random() < 0.25) {
+            this.particles.push(
+                new Particle(
+                    whiteHole.x, 
+                    whiteHole.y
+                )
+            );
         }
     }
 
@@ -14,19 +22,14 @@ class ParticleSystem {
             );
 
             if (d < blackHole.influenceRadius) {
-                let force = blackHole.attract(p);
-                p.applyForce(force);
-                p.maxSpeed = 8;
-            } else {
-                p.maxSpeed = 4;
+                p.applyForce(blackHole.attract(p));
             }
         }
     }
 
     applyWhiteHole(whiteHole) {
         for (let p of this.particles) {
-            let force = whiteHole.repel(p);
-            p.applyForce(force);
+            p.applyForce(whiteHole.repel(p));
         }
     }
 
@@ -37,14 +40,17 @@ class ParticleSystem {
     }
 
     update() {
-        for (let p of this.particles) {
-            p.update();
+        for (let i = this.particles.length - 1; i >= 0; i--) {
+            this.particles[i].update();
+            if (this.particles[i].isDead()) {
+                this.particles.splice(i, 1);
+            }
         }
     }
     
     draw() {
         for (let p of this.particles) {
-            p.draw();
+            p.show();
         }
     }
 }

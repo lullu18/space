@@ -1,13 +1,13 @@
 class WhiteHole {
   constructor(x, y) {
     this.pos = createVector(x, y);
-    this.visualRadius = 40;
-    this.power = 20;
+    this.visualRadius = 50;
+    this.power = 30;
   }
 
   updateByBalance(balance) {
     this.visualRadius = map(balance, 0, 1, 40, 120);
-    this.power = map(balance, 0, 1, 20, 120);
+    this.power = map(balance, 0, 1, 20, 80);
   }
 
   repel(particle) {
@@ -15,7 +15,9 @@ class WhiteHole {
     let distance = constrain(force.mag(), 20, 300);
 
     force.normalize();
-    let strength = this.power / distance;
+
+    let strength = this.power / (distance * 1.5);
+    strength = constrain(strength, 0, 0.4);
 
     force.mult(strength);
     return force;
@@ -23,7 +25,7 @@ class WhiteHole {
 
   show() {
     noFill();
-    stroke(255, 120);
+    stroke(0, 0, 100, 150);
     ellipse(this.pos.x, this.pos.y, this.visualRadius * 2);
   }
 }
