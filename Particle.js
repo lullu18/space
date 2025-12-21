@@ -1,26 +1,28 @@
 class Particle {
     constructor(x, y) {
         this.pos = createVector(x, y);
-        // Initial velocity: explosion or drift outward before being sucked in
         this.vel = p5.Vector.random2D();
-        this.vel.mult(random(0.5, 2));
         this.acc = createVector(0, 0);
-        this.lifespan = 255.0;
-        this.mass = random(0.5, 2);
-        this.fromWhiteHole = false;
-        this.immunity = 0;
 
-        // Color: Purple to Blue spectrum
-        this.hue = random(180, 280); // Blue to Purple/Pink range if using HSB logic roughly
-        this.r = random(100, 200);
-        this.g = random(50, 150);
-        this.b = random(200, 255);
+        this.mass = random(0.5, 2);
+        this.maxSpeed = 4;
     }
 
     applyForce(force) {
-        let f = force.copy();
-        f.div(this.mass);
+        let f = p5.Vector.div(force, this.mass);
         this.acc.add(f);
+    }
+
+    checkBlackHole(blackHole) {
+        let d = dist(this.pos.x, this.pos.y,
+        blackHole.pos.x, blackHole.pos.y);
+
+        if (d < blackHole.influenceRadius) {
+            this.maxSpeed = 8; // 👈 근처에서 가속
+        } 
+        else {
+            this.maxSpeed = 4;
+        }
     }
 
     update() {
