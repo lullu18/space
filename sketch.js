@@ -1,39 +1,48 @@
-let systems = [];
 let blackHole;
-let whiteHoles = [];
-let G = 1; // Gravitational constant
+let whiteHole;
+let particleSystem;
+
+let slider;
+let balance = 0.5;
 
 function setup() {
     createCanvas(800, 600);
 
-    // Create the central Black Hole
-    blackHole = new BlackHole(width / 3, height / 2, 50);
+    slider = createSlider(0, 1, 0.5, 0.01);
+    slider.position(20, 20);
+    slider.style('width', '160px');
 
-    // systems.push(new ParticleSystem(0, 0));
+    blackHole = new BlackHole(width / 3, height / 2, 50);
+    whiteHole = new WhiteHole((2 * width) / 3, height / 2);
+
+    particleSystem = new ParticleSystem();
 }
 
 function draw() {
-    background(10, 10, 20, 200); // Slight trail effect with alpha
+    background(10); 
 
-    for (let wh of whiteHoles) {
-        wh.update(systems[0]); // Update white hole to emit particles
-        wh.show();
-    }
+    balance = slider.value();
 
-    for (let ps of systems) {
-        ps.applyAttractor(blackHole);
-        ps.applyNoise();
-        ps.run();
-    }
+    blackHole.updateByBalance(balance);
+    whiteHole.updateByBalance(balance);
 
-    blackHole.show();
+    blackHole.draw();
+    whiteHole.draw();
+
+    particleSystem.applyBlackHole(blackHole);
+    particleSystem.applyWhiteHole(whiteHole);
+
+    particleSystem.update();
+    particleSystem.draw();
+
+    drawUI();  
 }
 
-function mousePressed() {
-    let wh = new WhiteHole(mouseX, mouseY);
-    let ps = new ParticleSystem(mouseX, mouseY);
-    wh.system = ps;
-    whiteHoles.push(wh);
-    systems.push(ps);
+function drawUI() {
+    fill(255);
+    noStroke();
+    textSize(12);
+    text("Black Hole", 20, 70);
+    text("White Hole", 140, 70);
 }
 
