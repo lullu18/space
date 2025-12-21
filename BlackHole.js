@@ -28,11 +28,6 @@ class BlackHole {
         return force;
     }
 
-    checkInside(particle) {
-        let d = p5.Vector.dist(this.pos, particle.pos);
-        return d < this.rs; // Consumed if closer than visual radius
-    }
-
     show() {
         noStroke();
         fill(0);

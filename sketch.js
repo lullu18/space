@@ -7,6 +7,7 @@ let balance = 0.5;
 
 function setup() {
     createCanvas(800, 600);
+    colorMode(HSB, 360, 100, 100, 225);
 
     slider = createSlider(0, 1, 0.5, 0.01);
     slider.position(20, 20);
@@ -31,6 +32,7 @@ function draw() {
 
     particleSystem.applyBlackHole(blackHole);
     particleSystem.applyWhiteHole(whiteHole);
+    particleSystem.applyColor(blackHole, whiteHole);
 
     particleSystem.update();
     particleSystem.draw();
@@ -43,6 +45,6 @@ function drawUI() {
     noStroke();
     textSize(12);
     text("Black Hole", 20, 70);
-    text("White Hole", 140, 70);
+    text("White Hole", 160, 70);
 }
 

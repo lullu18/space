@@ -1,7 +1,6 @@
 class WhiteHole {
   constructor(x, y) {
     this.pos = createVector(x, y);
-
     this.visualRadius = 40;
     this.power = 20;
   }
@@ -24,7 +23,7 @@ class WhiteHole {
 
   show() {
     noFill();
-    stroke(255);
+    stroke(255, 120);
     ellipse(this.pos.x, this.pos.y, this.visualRadius * 2);
   }
 }

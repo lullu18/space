@@ -1,7 +1,6 @@
 class ParticleSystem {
     constructor(x, y) {
         this.particles = [];
-
         for(let i = 0; i < 300; i++) {
             this.particles.push(new Particle(random(width), random(height)));
         }
@@ -28,6 +27,12 @@ class ParticleSystem {
         for (let p of this.particles) {
             let force = whiteHole.repel(p);
             p.applyForce(force);
+        }
+    }
+
+    applyColor(blackHole, whiteHole) {
+        for (let p of this.particles) {
+            p.updateColorByPosition(blackHole, whiteHole);
         }
     }
 
