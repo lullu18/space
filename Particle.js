@@ -9,6 +9,7 @@ class Particle {
 
         this.hue = random(220, 280);
         this.baseSaturation = random(60, 90);
+        this.baseBrightness = random(40, 70);
         this.currentBrightness = this.baseBrightness;
         this.alpha = random(120, 180);
     }

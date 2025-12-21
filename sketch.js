@@ -27,8 +27,8 @@ function draw() {
     blackHole.updateByBalance(balance);
     whiteHole.updateByBalance(balance);
 
-    blackHole.draw();
-    whiteHole.draw();
+    blackHole.show();
+    whiteHole.show();
 
     particleSystem.applyBlackHole(blackHole);
     particleSystem.applyWhiteHole(whiteHole);
